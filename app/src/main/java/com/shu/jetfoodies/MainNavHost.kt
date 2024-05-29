@@ -1,5 +1,7 @@
 package com.shu.jetfoodies
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -30,7 +32,10 @@ fun MainNavHost(
         composable(BottomNavigationScreens.MainScreen.route) {
             viewModel.changeStateTOpBar(true)
 
-            CheckState()
+            CheckState(onProductClick = {
+                Log.d("navHost", "Click on Card $it")
+               // Toast.makeText(this,"Click",Toast.LENGTH_LONG)
+            })
            /* CheckState(onMovieClick = { filmId ->
                 navController.navigate(
                     route = "${BottomNavigationScreens.DetailScreen.route}/${filmId}"

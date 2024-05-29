@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shu.catolog.ui.CategoryGrid
+import com.shu.catolog.ui.ProductView
 import com.shu.home.state.ErrorScreen
 import com.shu.home.state.LoadingScreen
 
@@ -12,7 +12,7 @@ import com.shu.home.state.LoadingScreen
 @Composable
 fun CheckState(
     viewModel: HomeViewModel = hiltViewModel(),
-   // onMovieClick: (Int?) -> Unit
+    onProductClick: (Int?) -> Unit
 ) {
     val viewState by viewModel.uiState.collectAsState()
 
@@ -21,7 +21,7 @@ fun CheckState(
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
 
-            CategoryGrid(products = (viewState as UiState.Success).products)
+            ProductView(stateScreen = (viewState as UiState.Success).stateScreen,onProductClick = onProductClick )
         }
 
         is UiState.Error -> ErrorScreen(

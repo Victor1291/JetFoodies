@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shu.modules.Category
 import com.shu.modules.Product
+import com.shu.modules.StateScreen
 import com.shu.network.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ import java.util.GregorianCalendar
 import javax.inject.Inject
 
 sealed interface UiState {
-    data class Success(val products: List<Product>) : UiState
+    data class Success(val stateScreen: StateScreen) : UiState
     data object Error : UiState
     data object Loading : UiState
 }
@@ -51,7 +52,7 @@ class HomeViewModel @Inject constructor(
             _uiState.value = UiState.Loading
             _uiState.value =
                 try {
-                    UiState.Success(repository.getProducts())
+                    UiState.Success(repository.getAll())
                 } catch (e: Exception) {
                     Log.e("viewmodelError", "Error $e")
                     UiState.Error
