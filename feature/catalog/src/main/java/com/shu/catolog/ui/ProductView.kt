@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.shu.catolog.HomeViewModel
 import com.shu.catolog.R
+import com.shu.modules.Product
 import com.shu.modules.StateScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +32,8 @@ import com.shu.modules.StateScreen
 fun ProductView(
     stateScreen: StateScreen,
     viewModel: HomeViewModel,
-    onProductClick: (Int) -> Unit,
+    onCategoryClick: (Int) -> Unit,
+    onProductClick: (Product) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -78,7 +80,7 @@ fun ProductView(
 
                     InputChip(
                         onClick = {
-                            onProductClick(category)
+                            onCategoryClick(category)
                             viewModel.changeSelect(category)
                         },
                         label = { Text(stateScreen.category[category].name.toString()) },
@@ -99,11 +101,7 @@ fun ProductView(
                 }
             }
 
-            ProductGrid(products = stateScreen.products) {
-
-            }
-
-
+            ProductGrid(products = stateScreen.products, onProductClick =  onProductClick)
         }
     }
 }

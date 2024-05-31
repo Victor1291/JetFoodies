@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -29,19 +28,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.shu.catolog.R
 import com.shu.modules.Product
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun ProductGrid(
     products: List<Product>,
     modifier: Modifier = Modifier,
-    onMessageSent: () -> Unit,
-    // onBookClicked: (Category) -> Unit
+    onProductClick: (Product) -> Unit,
 ) {
     //Scroll to Top when change category
     val gridState = rememberLazyGridState()
@@ -58,12 +57,13 @@ fun ProductGrid(
     }
 
     LazyVerticalGrid(
+       modifier = Modifier.padding(bottom = 80.dp),
         columns = GridCells.Adaptive(150.dp),
         contentPadding = PaddingValues(4.dp),
-        state  = LazyGridState()
+        state = LazyGridState()
     ) {
         itemsIndexed(products) { _, product ->
-            DishesCard(product = product, modifier, true, onMessageSent)
+            DishesCard(product = product, modifier, true, onProductClick)
         }
     }
 }
@@ -74,8 +74,7 @@ fun DishesCard(
     product: Product,
     modifier: Modifier,
     sendMessageEnabled: Boolean,
-    onMessageSent: () -> Unit,
-    //onBookClicked: (Book) -> Unit
+    onProductClick: (Product) -> Unit,
 ) {
     val border = if (!sendMessageEnabled) {
         BorderStroke(
@@ -96,9 +95,9 @@ fun DishesCard(
             .padding(4.dp)
             .fillMaxWidth()
             .requiredHeight(296.dp)
-            .clickable { }, //onBookClicked(book) },
+            .clickable { onProductClick(product) },
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(horizontalAlignment = Alignment.Start) {
 
             Image(
                 modifier = modifier
@@ -110,34 +109,38 @@ fun DishesCard(
             product.name?.let {
                 Text(
                     text = it,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
+                    fontStyle = FontStyle.Normal,
+                    fontSize = 16.sp,
                     modifier = modifier
-                        .padding(top = 4.dp, bottom = 8.dp)
+
                 )
             }
             product.measure?.let { measure ->
                 Text(
                     text = "$measure ${product.measureUnit}",
-                    textAlign = TextAlign.Center,
-                    modifier = modifier
-                        .padding(top = 4.dp, bottom = 8.dp)
+                    textAlign = TextAlign.Start,
+                    fontSize = 14.sp,
+                    modifier = modifier,
                 )
             }
-            product.priceCurrent?.let { price ->
-                Button(
-                    modifier = Modifier.height(36.dp),
-                    enabled = sendMessageEnabled,
-                    onClick = onMessageSent,
-                    colors = buttonColors,
-                    border = border,
-                    contentPadding = PaddingValues(0.dp)
-                ) {
-                    Text(
-                        text = (price / 100).toString(),
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    )
-                }
+
+        }
+        product.priceCurrent?.let { price ->
+            Button(
+                modifier = Modifier.height(36.dp).align(Alignment.CenterHorizontally),
+                enabled = sendMessageEnabled,
+                onClick = { onProductClick(product) },
+                colors = buttonColors,
+                border = border,
+                contentPadding = PaddingValues(0.dp),
+            ) {
+                Text(
+                    text = (price / 100).toString(),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
         }
+
     }
 }

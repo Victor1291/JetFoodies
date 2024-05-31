@@ -7,12 +7,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.shu.catolog.ui.ProductView
 import com.shu.home.state.ErrorScreen
 import com.shu.home.state.LoadingScreen
+import com.shu.modules.Product
 
 
 @Composable
 fun CheckState(
     viewModel: HomeViewModel = hiltViewModel(),
-    onProductClick: (Int?) -> Unit
+    onCategoryClick: (Int) -> Unit,
+    onProductClick: (Product) -> Unit
 ) {
     val viewState by viewModel.uiState.collectAsState()
 
@@ -24,6 +26,7 @@ fun CheckState(
             ProductView(
                 stateScreen = (viewState as UiState.Success).stateScreen,
                 viewModel = viewModel,
+                onCategoryClick = onCategoryClick,
                 onProductClick = onProductClick
             )
         }

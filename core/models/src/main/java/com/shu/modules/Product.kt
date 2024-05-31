@@ -1,5 +1,7 @@
 package com.shu.modules
 
+import android.os.Bundle
+
 data class Product(
     val id: Int?,
     val categoryId: Int?,
@@ -16,3 +18,4 @@ data class Product(
     val carbohydratesPer100Grams: Double?,
     val tagIds: ArrayList<String>
 )
+

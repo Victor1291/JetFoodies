@@ -1,7 +1,6 @@
 package com.shu.jetfoodies
 
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
@@ -11,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.shu.catolog.CheckState
+import com.shu.detail.DetailScreen
 
 /*
 import com.shu.detail_movie.DetailCheckState
@@ -32,15 +32,17 @@ fun MainNavHost(
         composable(BottomNavigationScreens.MainScreen.route) {
             viewModel.changeStateTOpBar(true)
 
-            CheckState(onProductClick = {
+            CheckState(onProductClick = { product ->
                 Log.d("navHost", "Click on Card $it")
-               // Toast.makeText(this,"Click",Toast.LENGTH_LONG)
-            })
-           /* CheckState(onMovieClick = { filmId ->
+                val productLink = "${BottomNavigationScreens.DetailScreen.route}/${
+                    ProductParametersType.serializeAsValue(product)
+                }"
+                println("productLink : $productLink")
                 navController.navigate(
-                    route = "${BottomNavigationScreens.DetailScreen.route}/${filmId}"
+                    route = productLink
                 )
-            })*/
+            }, onCategoryClick = {}
+                )
         }
 
         composable(BottomNavigationScreens.SearchScreen.route) {
@@ -73,13 +75,18 @@ fun MainNavHost(
         composable(
             route = "${BottomNavigationScreens.DetailScreen.route}/{$argumentKey}",
             arguments = listOf(navArgument(argumentKey) {
-                type = NavType.IntType
+                type = ProductParametersType
             })
-        ) { backStackEntry ->
-            backStackEntry.arguments?.getInt(argumentKey)?.let { filmId ->
-                viewModel.changeStateTOpBar(false)
-                //DetailCheckState(onMovieClick = {}, filmId = filmId)
+        ) { navBackStackEntry ->
+
+            val arguments = navBackStackEntry.arguments
+            val params = arguments?.getString(argumentKey)
+
+            val paramsData = params?.let {
+                ProductParametersType.parseValue(it)
             }
+            DetailScreen(paramsData,navController)
+
             BackHandler {
                 navController.popBackStack()
             }
