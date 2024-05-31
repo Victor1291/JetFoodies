@@ -21,11 +21,15 @@ fun CheckState(
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
 
-            ProductView(stateScreen = (viewState as UiState.Success).stateScreen,onProductClick = onProductClick )
+            ProductView(
+                stateScreen = (viewState as UiState.Success).stateScreen,
+                viewModel = viewModel,
+                onProductClick = onProductClick
+            )
         }
 
         is UiState.Error -> ErrorScreen(
-            retryAction = {  },
+            retryAction = { },
         )
 
     }

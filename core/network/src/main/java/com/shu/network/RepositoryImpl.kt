@@ -13,7 +13,7 @@ class RepositoryImpl @Inject constructor(
     override suspend fun getAll(): StateScreen {
         return StateScreen(
             category = getCategories(),
-            products = getProducts()
+            products = getProducts(),
         )
     }
 

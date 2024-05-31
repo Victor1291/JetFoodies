@@ -3,24 +3,26 @@ package com.shu.catolog.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.shu.catolog.HomeViewModel
 import com.shu.catolog.R
 import com.shu.modules.StateScreen
 
@@ -28,6 +30,7 @@ import com.shu.modules.StateScreen
 @Composable
 fun ProductView(
     stateScreen: StateScreen,
+    viewModel: HomeViewModel,
     onProductClick: (Int) -> Unit,
 ) {
     Scaffold(
@@ -56,7 +59,7 @@ fun ProductView(
                     }
                 },
 
-            )
+                )
         }
     ) { innerPadding ->
         val modifier = Modifier.padding(innerPadding)
@@ -64,15 +67,8 @@ fun ProductView(
             modifier = Modifier.padding(innerPadding)
         ) {
 
+            val select by viewModel.selectCategory.collectAsState()
 
-            // val coroutineScope = rememberCoroutineScope()
-            /* val comicsInfo =
-                 remember { mutableStateOf<GreatResult<ComicsWrapperDto>>(GreatResult.Progress) }
- */
-            /*   LaunchedEffect(true) {
-                   val info = viewModel.fetchComicsInfoById(comicsId)
-                   comicsInfo.value = info
-               }*/
             LazyRow(
                 contentPadding = PaddingValues(4.dp),
                 modifier = Modifier,
@@ -80,16 +76,25 @@ fun ProductView(
 
                 items(stateScreen.category.size) { category ->
 
-                    Button(
-                        modifier = Modifier.height(36.dp),
-                        onClick = { onProductClick(category) },
-                        contentPadding = PaddingValues(0.dp)
-                    ) {
-                        Text(
-                            text = stateScreen.category[category].name.toString(),
-                            modifier = Modifier.padding(horizontal = 16.dp)
-                        )
-                    }
+                    InputChip(
+                        onClick = {
+                            onProductClick(category)
+                            viewModel.changeSelect(category)
+                        },
+                        label = { Text(stateScreen.category[category].name.toString()) },
+                        selected = category == select,
+                        border = InputChipDefaults.inputChipBorder(false, false)
+                    )
+                    /*  Button(
+                          modifier = Modifier.height(36.dp),
+                          onClick = { onProductClick(category) },
+                          contentPadding = PaddingValues(0.dp)
+                      ) {
+                          Text(
+                              text = stateScreen.category[category].name.toString(),
+                              modifier = Modifier.padding(horizontal = 16.dp)
+                          )
+                      }*/
 
                 }
             }

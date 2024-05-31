@@ -10,14 +10,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shu.catolog.R
 import com.shu.modules.Product
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductGrid(
@@ -34,9 +43,24 @@ fun ProductGrid(
     onMessageSent: () -> Unit,
     // onBookClicked: (Category) -> Unit
 ) {
+    //Scroll to Top when change category
+    val gridState = rememberLazyGridState()
+    val coroutineScope = rememberCoroutineScope()
+    val isAtTop by remember {
+        derivedStateOf {
+            gridState.firstVisibleItemIndex == 0 && gridState.firstVisibleItemScrollOffset == 0
+        }
+    }
+    if (!isAtTop) {
+        coroutineScope.launch {
+            gridState.animateScrollToItem(0)
+        }
+    }
+
     LazyVerticalGrid(
         columns = GridCells.Adaptive(150.dp),
-        contentPadding = PaddingValues(4.dp)
+        contentPadding = PaddingValues(4.dp),
+        state  = LazyGridState()
     ) {
         itemsIndexed(products) { _, product ->
             DishesCard(product = product, modifier, true, onMessageSent)
@@ -109,7 +133,7 @@ fun DishesCard(
                     contentPadding = PaddingValues(0.dp)
                 ) {
                     Text(
-                        text = price.toString(),
+                        text = (price / 100).toString(),
                         modifier = Modifier.padding(horizontal = 16.dp)
                     )
                 }
