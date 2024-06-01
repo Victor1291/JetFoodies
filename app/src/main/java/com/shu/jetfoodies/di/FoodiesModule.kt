@@ -1,6 +1,6 @@
 package com.shu.jetfoodies.di
 
-import com.shu.network.Repository
+import com.shu.catolog.data.Repository
 import com.shu.network.RepositoryImpl
 import com.shu.network.ServiceApi
 import dagger.Module
@@ -10,13 +10,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class CinemaModule {
+class FoodiesModule {
 
-    @Provides
-    fun providesRepository(
-        api: ServiceApi
-    ): Repository {
-        return RepositoryImpl(api)
-    }
 
 }

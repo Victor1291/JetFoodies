@@ -1,4 +1,4 @@
-package com.shu.network
+package com.shu.catolog.data
 
 import com.shu.modules.Category
 import com.shu.modules.Product

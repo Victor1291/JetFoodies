@@ -1,26 +1,44 @@
 package com.shu.network
 
+import com.shu.catolog.data.Repository
+import com.shu.database.FoodieDao
+import com.shu.database.models.ProductDbo
 import com.shu.modules.Category
 import com.shu.modules.Product
 import com.shu.modules.StateScreen
 import com.shu.modules.Tag
 import com.shu.network.models.fromApi
+import com.shu.network.models.fromDb
+import com.shu.network.models.toDb
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val api: ServiceApi,
+    private val dao: FoodieDao
 ) : Repository {
     override suspend fun getAll(): StateScreen {
+        val listFromDb = dao.getAllProducts()
+       val listProducts = if(listFromDb.isNotEmpty()) {
+           listFromDb.map {
+               it.fromDb()
+           }
+       }
+       else getProducts()
+
         return StateScreen(
             category = getCategories(),
-            products = getProducts(),
+            products = listProducts,
         )
     }
 
     override suspend fun getProducts(): List<Product> {
-        return api.getProducts().map {
+        val listDb = mutableListOf<ProductDbo>()
+        val listApi = api.getProducts().map {
+            listDb.add(it.toDb())
             it.fromApi()
         }
+        dao.insertProducts(listDb)
+        return listApi
     }
 
     override suspend fun getCategories(): List<Category> {

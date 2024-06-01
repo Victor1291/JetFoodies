@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shu.catolog"
+    namespace = "com.shu.bascket"
     compileSdk = 33
 
     defaultConfig {
@@ -56,7 +56,7 @@ dependencies {
 
     //Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
-   // implementation(project(mapOf("path" to ":core:network")))
+    implementation(project(mapOf("path" to ":core:network")))
     implementation(project(mapOf("path" to ":core:models")))
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
@@ -64,9 +64,9 @@ dependencies {
     //Coil
     implementation("io.coil-kt:coil-compose:2.2.2")
 
-   // implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    // implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
-   // implementation("androidx.datastore:datastore-preferences:1.1.1")
+    // implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

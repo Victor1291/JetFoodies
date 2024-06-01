@@ -3,6 +3,8 @@ package com.shu.catolog.ui
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,8 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,7 +61,7 @@ fun ProductGrid(
     }
 
     LazyVerticalGrid(
-       modifier = Modifier.padding(bottom = 80.dp),
+        modifier = Modifier.padding(bottom = 80.dp),
         columns = GridCells.Adaptive(150.dp),
         contentPadding = PaddingValues(4.dp),
         state = LazyGridState()
@@ -90,57 +94,72 @@ fun DishesCard(
         disabledContainerColor = Color.Transparent,
         disabledContentColor = disabledContentColor
     )
+
     Card(
         modifier = modifier
             .padding(4.dp)
             .fillMaxWidth()
-            .requiredHeight(296.dp)
+            .requiredHeight(270.dp)
             .clickable { onProductClick(product) },
+        elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(horizontalAlignment = Alignment.Start) {
+        Box(
+            modifier = modifier
+                .padding(4.dp)
+                .fillMaxWidth()
+                .requiredHeight(270.dp)
+                .clickable { onProductClick(product) }
+            //    .background(color = Color.White, shape = RectangleShape),
 
-            Image(
-                modifier = modifier
-                    .padding(4.dp)
-                    .fillMaxWidth(),
-                painter = painterResource(id = R.drawable.rectangle),
-                contentDescription = "icon for navigation item"
-            )
-            product.name?.let {
-                Text(
-                    text = it,
-                    textAlign = TextAlign.Start,
-                    fontStyle = FontStyle.Normal,
-                    fontSize = 16.sp,
+        ) {
+            Column(horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+                ) {
+
+                Image(
                     modifier = modifier
-
+                        .padding(4.dp)
+                        .fillMaxWidth(),
+                    painter = painterResource(id = R.drawable.rectangle),
+                    contentDescription = "icon for navigation item"
                 )
-            }
-            product.measure?.let { measure ->
-                Text(
-                    text = "$measure ${product.measureUnit}",
-                    textAlign = TextAlign.Start,
-                    fontSize = 14.sp,
-                    modifier = modifier,
-                )
-            }
+                product.name?.let {
+                    Text(
+                        text = it,
+                        textAlign = TextAlign.Start,
+                        fontStyle = FontStyle.Normal,
+                        fontSize = 16.sp,
+                        modifier = modifier
 
+                    )
+                }
+                product.measure?.let { measure ->
+                    Text(
+                        text = "$measure ${product.measureUnit}",
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp,
+                        modifier = modifier,
+                    )
+                }
+
+            }
+            product.priceCurrent?.let { price ->
+                Button(
+                    modifier = Modifier
+                        .height(36.dp)
+                        .align(Alignment.BottomCenter),
+                    enabled = sendMessageEnabled,
+                    onClick = { onProductClick(product) },
+                    colors = buttonColors,
+                    border = border,
+                    contentPadding = PaddingValues(0.dp),
+                ) {
+                    Text(
+                        text = (price / 100).toString(),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
+            }
         }
-        product.priceCurrent?.let { price ->
-            Button(
-                modifier = Modifier.height(36.dp).align(Alignment.CenterHorizontally),
-                enabled = sendMessageEnabled,
-                onClick = { onProductClick(product) },
-                colors = buttonColors,
-                border = border,
-                contentPadding = PaddingValues(0.dp),
-            ) {
-                Text(
-                    text = (price / 100).toString(),
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-            }
-        }
-
     }
 }

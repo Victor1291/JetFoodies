@@ -5,9 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -37,6 +35,7 @@ fun DetailScreen(
     product: Product?,
     navHostController: NavHostController,
     modifier: Modifier = Modifier,
+    onProductClick: (Product) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -58,7 +57,7 @@ fun DetailScreen(
         content = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
 
-            DetailView(product)
+            DetailView(product = product,onProductClick = onProductClick)
         }
     )
 }
@@ -67,6 +66,7 @@ fun DetailScreen(
 fun DetailView(
     product: Product?,
     modifier: Modifier = Modifier,
+    onProductClick: (Product) -> Unit
 ) {
     LazyColumn(
         contentPadding = PaddingValues(4.dp),
@@ -84,8 +84,8 @@ fun DetailView(
         item {
             Text(
                 text = product?.name ?: "",
-                lineHeight = 35.sp,
-                fontSize = 36.sp,
+                lineHeight = 30.sp,
+                fontSize = 26.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center
             )
@@ -93,8 +93,8 @@ fun DetailView(
         item {
             Text(
                 text = product?.description ?: "",
-                lineHeight = 35.sp,
-                fontSize = 24.sp,
+                lineHeight = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
             )
         }
@@ -114,7 +114,11 @@ fun DetailView(
             Button(
                 modifier = Modifier
                     .fillMaxWidth(),
-                onClick = {}
+                onClick = {
+                    if (product != null) {
+                        onProductClick(product)
+                    }
+                }
             ) {
                 Text(
                     //stringResource(id = R.string.dots),
@@ -123,7 +127,7 @@ fun DetailView(
                     fontSize = 16.sp,
                 )
             }
-           // Spacer(modifier = Modifier.height(100.dp))
+            // Spacer(modifier = Modifier.height(100.dp))
         }
     }
 
@@ -148,15 +152,15 @@ fun RowText(first: String, second: String) {
     ) {
         Text(
             text = first,
-            lineHeight = 35.sp,
-            fontSize = 20.sp,
+            lineHeight = 20.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
             //  modifier = Modifier.wrapContentWidth(align = Alignment.Start)
         )
         Text(
             text = second,
-            lineHeight = 35.sp,
-            fontSize = 20.sp,
+            lineHeight = 20.sp,
+            fontSize = 18.sp,
             fontWeight = FontWeight.Medium,
             //  modifier = Modifier.wrapContentWidth(align = Alignment.End)
         )

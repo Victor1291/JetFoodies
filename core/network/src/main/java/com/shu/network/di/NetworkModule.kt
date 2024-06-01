@@ -1,5 +1,8 @@
 package com.shu.network.di
 
+import com.shu.catolog.data.Repository
+import com.shu.database.FoodieDao
+import com.shu.network.RepositoryImpl
 import com.shu.network.ServiceApi
 import dagger.Module
 import dagger.Provides
@@ -17,6 +20,13 @@ private const val BASE_URL = "https://anika1d.github.io/WorkTestServer/"
 @Module
 class NetworkModule {
 
+    @Provides
+    fun providesRepository(
+        api: ServiceApi,
+        dao: FoodieDao
+    ): Repository {
+        return RepositoryImpl(api,dao)
+    }
 
     @Provides
     fun provideRetrofit(): ServiceApi = Retrofit.Builder()

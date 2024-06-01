@@ -3,9 +3,9 @@ package com.shu.catolog
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.shu.catolog.data.Repository
 import com.shu.modules.Product
 import com.shu.modules.StateScreen
-import com.shu.network.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

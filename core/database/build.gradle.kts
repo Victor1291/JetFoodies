@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.shu.network"
+    namespace = "com.shu.database"
     compileSdk = 33
 
     defaultConfig {
@@ -36,22 +36,15 @@ android {
 
 dependencies {
 
+
+    // Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp ("androidx.room:room-compiler:2.6.1")
+
     //Hilt
     implementation("com.google.dagger:hilt-android:2.48.1")
-    implementation(project(mapOf("path" to ":core:models")))
-    implementation(project(mapOf("path" to ":feature:catalog")))
-    implementation(project(mapOf("path" to ":core:database")))
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
-
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
-    //OkHttp
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
-    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
-
-
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

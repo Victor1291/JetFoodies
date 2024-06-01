@@ -1,6 +1,7 @@
 package com.shu.network.models
 
 import com.google.gson.annotations.SerializedName
+import com.shu.database.models.ProductDbo
 import com.shu.modules.Product
 
 data class ProductDto(
@@ -41,3 +42,44 @@ fun ProductDto.fromApi(): Product {
     }
 }
 
+fun ProductDto.toDb(): ProductDbo {
+    return with(this) {
+        ProductDbo(
+            id = id,
+            categoryId = categoryId,
+            name = name,
+            description = description,
+            image = image,
+            priceCurrent = priceCurrent,
+            priceOld = priceOld,
+            measure = measure,
+            measureUnit = measureUnit,
+            energyPer100Grams = energyPer100Grams,
+            proteinsPer100Grams = proteinsPer100Grams,
+            fatsPer100Grams = fatsPer100Grams,
+            carbohydratesPer100Grams = carbohydratesPer100Grams,
+            tagIds = tagIds,
+        )
+    }
+}
+
+fun ProductDbo.fromDb(): Product {
+    return with(this) {
+        Product(
+            id = id,
+            categoryId = categoryId,
+            name = name,
+            description = description,
+            image = image,
+            priceCurrent = priceCurrent,
+            priceOld = priceOld,
+            measure = measure,
+            measureUnit = measureUnit,
+            energyPer100Grams = energyPer100Grams,
+            proteinsPer100Grams = proteinsPer100Grams,
+            fatsPer100Grams = fatsPer100Grams,
+            carbohydratesPer100Grams = carbohydratesPer100Grams,
+            tagIds = tagIds,
+        )
+    }
+}

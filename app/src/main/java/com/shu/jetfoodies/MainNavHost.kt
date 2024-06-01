@@ -5,7 +5,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
@@ -30,8 +29,6 @@ fun MainNavHost(
         navController = navController, startDestination = BottomNavigationScreens.MainScreen.route
     ) {
         composable(BottomNavigationScreens.MainScreen.route) {
-            viewModel.changeStateTOpBar(true)
-
             CheckState(onProductClick = { product ->
                 Log.d("navHost", "Click on Card $it")
                 val productLink = "${BottomNavigationScreens.DetailScreen.route}/${
@@ -42,7 +39,7 @@ fun MainNavHost(
                     route = productLink
                 )
             }, onCategoryClick = {}
-                )
+            )
         }
 
         composable(BottomNavigationScreens.SearchScreen.route) {
@@ -85,7 +82,10 @@ fun MainNavHost(
             val paramsData = params?.let {
                 ProductParametersType.parseValue(it)
             }
-            DetailScreen(paramsData,navController)
+            DetailScreen(paramsData, navController, onProductClick = { product ->
+                //save in Basket
+                viewModel.addProduct(product)
+            })
 
             BackHandler {
                 navController.popBackStack()
