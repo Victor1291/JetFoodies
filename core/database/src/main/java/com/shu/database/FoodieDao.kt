@@ -31,6 +31,10 @@ interface FoodieDao {
     @Query("DELETE FROM basket WHERE id = :id")
     suspend fun delFromBasket(id: Int)
 
+    @Query("DELETE FROM basket")
+    suspend fun cleanBasket()
+
+
     //count + 1
 
     //count - 1

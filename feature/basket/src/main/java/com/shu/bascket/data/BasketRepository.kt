@@ -1,16 +1,18 @@
 package com.shu.bascket.data
 
 import com.shu.modules.BasketEntity
-import com.shu.modules.Category
-import com.shu.modules.Product
-import com.shu.modules.StateScreen
-import com.shu.modules.Tag
 import kotlinx.coroutines.flow.Flow
 
 
 interface BasketRepository {
 
-     fun getBasket(): Flow<List<BasketEntity>>
+    fun getBasket(): Flow<List<BasketEntity>>
 
+// увеличивать счётчик и менять цену
+    // уменьшать счётчик до 1
+// удалять нажатием на корзинку.
+// очистка всей корзинки.
+
+    suspend fun clearBasket()
 
 }

@@ -24,4 +24,6 @@ class DetailRepositoryImpl @Inject constructor(
     override suspend fun addProduct(product: Product) {
         dao.addBasket(product.toDb())
     }
+
+
 }

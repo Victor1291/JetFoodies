@@ -18,4 +18,8 @@ class BasketRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun clearBasket() {
+        dao.cleanBasket()
+    }
 }
