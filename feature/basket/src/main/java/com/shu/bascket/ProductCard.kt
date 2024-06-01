@@ -43,24 +43,27 @@ fun ProductCard(
 
             Image(
                 modifier = Modifier
-                    .padding(4.dp)
-                    .fillMaxWidth(),
+                    .padding(4.dp),
                 painter = painterResource(id = R.drawable.burger),
                 contentDescription = "image"
             )
-            Column {
+            Column(
+                modifier = Modifier,
+            ) {
                 Text(
                     text = product.name ?: "no data",
+                    maxLines = 2 ,
                     color = MaterialTheme.colorScheme.primary
                 )
 
-                Row {
+                Row(
+                    modifier = Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
 
                     Image(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .fillMaxWidth(),
                         painter = painterResource(id = R.drawable.minus),
+                        modifier = Modifier.padding(top = 10.dp, end = 20.dp),
                         contentDescription = "image"
                     )
 
@@ -71,13 +74,14 @@ fun ProductCard(
 
                     Icon(
                         imageVector = Icons.Default.Add,
+                        modifier = Modifier.padding(start = 20.dp),
                         contentDescription = null
                     )
                 }
             }
 
             Text(
-                text = " ${product.priceCurrent.toString()} Р",
+                text = " ${product.priceCurrent?.div(100)} Р",
                 color = MaterialTheme.colorScheme.primary
             )
 

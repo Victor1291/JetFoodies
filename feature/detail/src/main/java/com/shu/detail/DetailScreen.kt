@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.shu.modules.Product
 
@@ -34,6 +35,7 @@ import com.shu.modules.Product
 fun DetailScreen(
     product: Product?,
     navHostController: NavHostController,
+    viewModel: DetailViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
     onProductClick: (Product) -> Unit
 ) {
@@ -57,7 +59,10 @@ fun DetailScreen(
         content = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
 
-            DetailView(product = product,onProductClick = onProductClick)
+            DetailView(product = product, onProductClick = {
+                viewModel.addInCart(it)
+                onProductClick
+            })
         }
     )
 }

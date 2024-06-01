@@ -19,3 +19,4 @@ data class Product(
     val tagIds: ArrayList<String>
 )
 
+

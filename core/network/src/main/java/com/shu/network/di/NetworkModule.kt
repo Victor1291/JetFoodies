@@ -3,7 +3,9 @@ package com.shu.network.di
 import com.shu.bascket.data.BasketRepository
 import com.shu.catolog.data.Repository
 import com.shu.database.FoodieDao
+import com.shu.detail.data.DetailRepository
 import com.shu.network.BasketRepositoryImpl
+import com.shu.network.DetailRepositoryImpl
 import com.shu.network.RepositoryImpl
 import com.shu.network.ServiceApi
 import dagger.Module
@@ -35,6 +37,12 @@ class NetworkModule {
         dao: FoodieDao
     ): BasketRepository {
         return BasketRepositoryImpl(dao)
+    }
+    @Provides
+    fun providesDetailRepository(
+        dao: FoodieDao
+    ): DetailRepository {
+        return DetailRepositoryImpl(dao)
     }
 
     @Provides
