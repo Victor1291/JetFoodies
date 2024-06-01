@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.shu.bascket.BasketScreen
 import com.shu.catolog.CheckState
 import com.shu.detail.DetailScreen
 
@@ -43,28 +44,16 @@ fun MainNavHost(
         }
 
         composable(BottomNavigationScreens.SearchScreen.route) {
-            /* viewModel.changeStateTOpBar(false)
-             viewModel.getAllCity()
-             CityScreen(viewModel, onCityClicked = {
-                 viewModel.choiceCity = it ?: "Vladivostok"
-                 navController.navigate(
-                     BottomNavigationScreens.DetailScreen.route
-                 )
-             })*/
+
             BackHandler {
                 navController.popBackStack()
             }
         }
 
         composable(BottomNavigationScreens.PersonScreen.route) {
-            /* viewModel.changeStateTOpBar(false)
-             viewModel.getAllCity()
-             CityScreen(viewModel, onCityClicked = {
-                 viewModel.choiceCity = it ?: "Vladivostok"
-                 navController.navigate(
-                     BottomNavigationScreens.DetailScreen.route
-                 )
-             })*/
+
+            BasketScreen()
+
             BackHandler {
                 navController.popBackStack()
             }

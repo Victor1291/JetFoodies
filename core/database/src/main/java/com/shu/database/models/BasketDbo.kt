@@ -3,6 +3,7 @@ package com.shu.database.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.shu.modules.BasketEntity
 
 @Entity(tableName = "basket")
 data class BasketDbo(
@@ -20,3 +21,16 @@ data class BasketDbo(
     @ColumnInfo("price_old")
     val priceOld: String?,
 )
+
+fun BasketDbo.fromDb(): BasketEntity {
+    return with(this) {
+        BasketEntity(
+            id = id,
+            name = name,
+            count = count,
+            image = image,
+            priceCurrent = priceCurrent,
+            priceOld = priceOld,
+        )
+    }
+}

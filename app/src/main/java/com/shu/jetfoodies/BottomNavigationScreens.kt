@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import com.google.gson.Gson
@@ -14,7 +15,7 @@ import com.shu.modules.Product
 sealed class BottomNavigationScreens(val route: String, val label: String, val icon: ImageVector) {
     data object MainScreen : BottomNavigationScreens(
         route = "main_screen",
-        label = "Home",
+        label = "Catalog",
         icon = Icons.Default.Home
     )
 
@@ -26,8 +27,8 @@ sealed class BottomNavigationScreens(val route: String, val label: String, val i
 
     data object PersonScreen : BottomNavigationScreens(
         route = "location_screen",
-        label = "Профиль",
-        icon = Icons.Default.Person
+        label = "ShoppingCart",
+        icon = Icons.Default.ShoppingCart
     )
 
     data object DetailScreen : BottomNavigationScreens(

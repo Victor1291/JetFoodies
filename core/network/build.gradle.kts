@@ -41,6 +41,7 @@ dependencies {
     implementation(project(mapOf("path" to ":core:models")))
     implementation(project(mapOf("path" to ":feature:catalog")))
     implementation(project(mapOf("path" to ":core:database")))
+    implementation(project(mapOf("path" to ":feature:basket")))
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
 
     // Retrofit
