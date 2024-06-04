@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,12 +12,6 @@ import androidx.navigation.navArgument
 import com.shu.bascket.BasketScreen
 import com.shu.catolog.CheckState
 import com.shu.detail.DetailScreen
-
-/*
-import com.shu.detail_movie.DetailCheckState
-import com.shu.home.CheckState
-*/
-
 
 private const val argumentKey = "arg"
 
@@ -26,13 +21,15 @@ fun MainNavHost(
     paddingValues: PaddingValues,
     viewModel: MainViewModel,
 ) {
+    val context = LocalContext.current
     NavHost(
-        navController = navController, startDestination = BottomNavigationScreens.MainScreen.route
+        navController = navController,
+        startDestination = context.getString(AppRoute.MainScreen.route)
     ) {
-        composable(BottomNavigationScreens.MainScreen.route) {
+        composable(context.getString(AppRoute.MainScreen.route)) {
             CheckState(onProductClick = { product ->
                 Log.d("navHost", "Click on Card $it")
-                val productLink = "${BottomNavigationScreens.DetailScreen.route}/${
+                val productLink = "${context.getString(AppRoute.DetailScreen.route)}/${
                     ProductParametersType.serializeAsValue(product)
                 }"
                 println("productLink : $productLink")
@@ -43,14 +40,14 @@ fun MainNavHost(
             )
         }
 
-        composable(BottomNavigationScreens.SearchScreen.route) {
+        composable(context.getString(AppRoute.SearchScreen.route)) {
 
             BackHandler {
                 navController.popBackStack()
             }
         }
 
-        composable(BottomNavigationScreens.PersonScreen.route) {
+        composable(context.getString(AppRoute.PersonScreen.route)) {
 
             BasketScreen()
 
@@ -59,7 +56,7 @@ fun MainNavHost(
             }
         }
         composable(
-            route = "${BottomNavigationScreens.DetailScreen.route}/{$argumentKey}",
+            route = "${context.getString(AppRoute.DetailScreen.route)}/{$argumentKey}",
             arguments = listOf(navArgument(argumentKey) {
                 type = ProductParametersType
             })

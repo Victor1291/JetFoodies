@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature:catalog"))
     implementation(project(":feature:detail"))
     implementation(project(":feature:basket"))
+    implementation(project(":navigation"))
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0")

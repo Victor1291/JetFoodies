@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">JetFoodies</string>
+    <string name="main_screen">main_screen</string>
+    <string name="location_screen">location_screen</string>
+    <string name="catalog">Catalog</string>
+    <string name="search">Search</string>
+    <string name="shopping_screen">shopping_screen</string>
+    <string name="shoppingcart">ShoppingCart</string>
+    <string name="detail_screen">detail_screen</string>
+    <string name="dish">Dish</string>
+    <string name="icon_for_navigation_item">icon for navigation item</string>
 </resources>

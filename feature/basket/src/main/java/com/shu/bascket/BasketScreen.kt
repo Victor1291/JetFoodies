@@ -27,7 +27,7 @@ fun BasketScreen(
         modifier = modifier
             .padding(
                 top = 60.dp,
-                bottom = 60.dp
+                bottom = 120.dp
             )
     ) {
 

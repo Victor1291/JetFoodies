@@ -21,9 +21,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val viewModel: MainViewModel = hiltViewModel()
                 val bottomNavigationItems = listOf(
-                    BottomNavigationScreens.MainScreen,
-                    BottomNavigationScreens.SearchScreen,
-                    BottomNavigationScreens.PersonScreen,
+                    AppRoute.MainScreen,
+                    AppRoute.SearchScreen,
+                    AppRoute.PersonScreen,
                 )
                 Scaffold(
                     content = { MainNavHost(navController, it, viewModel) },
