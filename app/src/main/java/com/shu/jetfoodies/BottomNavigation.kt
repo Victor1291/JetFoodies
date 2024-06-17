@@ -16,9 +16,8 @@ fun BottomNav(navController: NavHostController, items: List<AppRoute>) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { screen ->
-            val routeScreen = stringResource(id = screen.route)
             NavigationBarItem(
-                selected = currentRoute == routeScreen,
+                selected = currentRoute == screen.route,
                 icon = {
                     Icon(
                         imageVector = screen.icon,
@@ -27,8 +26,8 @@ fun BottomNav(navController: NavHostController, items: List<AppRoute>) {
                 },
                 label = { Text(text = stringResource(id = screen.label)) },
                 onClick = {
-                    if (currentRoute != routeScreen) {
-                        navController.navigate(routeScreen)
+                    if (currentRoute != screen.route) {
+                        navController.navigate(screen.route)
                     }
                 }
             )

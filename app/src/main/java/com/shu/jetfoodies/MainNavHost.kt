@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,15 +20,15 @@ fun MainNavHost(
     paddingValues: PaddingValues,
     viewModel: MainViewModel,
 ) {
-    val context = LocalContext.current
+    // val context = LocalContext.current
     NavHost(
         navController = navController,
-        startDestination = context.getString(AppRoute.MainScreen.route)
+        startDestination = AppRoute.MainScreen.route
     ) {
-        composable(context.getString(AppRoute.MainScreen.route)) {
+        composable(AppRoute.MainScreen.route) {
             CheckState(onProductClick = { product ->
                 Log.d("navHost", "Click on Card $it")
-                val productLink = "${context.getString(AppRoute.DetailScreen.route)}/${
+                val productLink = "${AppRoute.DetailScreen.route}/${
                     ProductParametersType.serializeAsValue(product)
                 }"
                 println("productLink : $productLink")
@@ -40,14 +39,14 @@ fun MainNavHost(
             )
         }
 
-        composable(context.getString(AppRoute.SearchScreen.route)) {
+        composable(AppRoute.SearchScreen.route) {
 
             BackHandler {
                 navController.popBackStack()
             }
         }
 
-        composable(context.getString(AppRoute.PersonScreen.route)) {
+        composable(AppRoute.PersonScreen.route) {
 
             BasketScreen()
 
@@ -56,7 +55,7 @@ fun MainNavHost(
             }
         }
         composable(
-            route = "${context.getString(AppRoute.DetailScreen.route)}/{$argumentKey}",
+            route = "${AppRoute.DetailScreen.route}/{$argumentKey}",
             arguments = listOf(navArgument(argumentKey) {
                 type = ProductParametersType
             })
