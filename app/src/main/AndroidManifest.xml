@@ -40,7 +40,7 @@
                 <!--on below line we are specifying the host name and
                     the scheme type from which we will be calling our app-->
                 <data
-                    android:host="*.google.com"
+                    android:host="*.compose"
                     android:scheme="example" />
 
             </intent-filter>

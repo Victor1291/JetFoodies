@@ -39,7 +39,7 @@ fun MainNavHost(
         composable(
             AppRoute.MainScreen.route,
             deepLinks = listOf(navDeepLink {
-                uriPattern = "example://www.google.com/dashboard/{name}"
+                uriPattern = "example://www.compose/dashboard/{name}"
                 action = Intent.ACTION_VIEW
             }),
             arguments = listOf(
@@ -106,7 +106,7 @@ fun MainNavHost(
         composable(
             route = AppRoute.DeepScreen.route,
             deepLinks = listOf(navDeepLink {
-                uriPattern = "example://developer.google.com/detail/{id}"
+                uriPattern = "example://developer.compose/detail/{id}"
                 action = Intent.ACTION_VIEW
             }),
             arguments = listOf(navArgument("id") {
