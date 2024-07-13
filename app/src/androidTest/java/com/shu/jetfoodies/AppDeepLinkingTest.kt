@@ -38,7 +38,7 @@ class AppDeepLinkingTest {
     fun deepLinkApplicationTextDashboardDeeplinkHasText() {
         // Launch the activity with the deep link
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("example://compose/dashboard/johnDoe")
+            data = Uri.parse("example://www.google.com/dashboard/johnDoe")
         }
         scenario.onActivity { activity ->
             activity.startActivity(intent)
@@ -58,7 +58,7 @@ class AppDeepLinkingTest {
     fun deepLinkApplicationTestId() {
         // Launch the activity with the deep link
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("example://compose/detail/924131")
+            data = Uri.parse("example://developer.google.com/detail/924131")
         }
         scenario.onActivity { activity ->
             activity.startActivity(intent)
@@ -79,5 +79,11 @@ class AppDeepLinkingTest {
 /*
 cd C:\Users\vshut\AppData\Local\Android\Sdk
 .\adb shell am start -W -a android.intent.action.VIEW -d "example://compose/dashboard/dashBoardDeeplink"
-.\adb shell am start -W -a android.intent.action.VIEW -d "example://compose/settings/sampleArgument"
+
+.\adb shell am start -W -a android.intent.action.VIEW -d "example://www.google.com/dashboard/dashBoardDeeplink"
+
+.\adb shell am start -W -a android.intent.action.VIEW -d "example://compose/detail/sampleArgument"
+
+.\adb shell am start -W -a android.intent.action.VIEW -d "example://developer.google.com/detail/sampleArgument"
+.\adb shell am start -W -a android.intent.action.VIEW -d "example://google.com/detail/sampleArgument" dont work but start.
  */
