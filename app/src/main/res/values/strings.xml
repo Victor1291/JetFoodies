@@ -9,4 +9,5 @@
     <string name="detail_screen">detail_screen</string>
     <string name="dish">Dish</string>
     <string name="icon_for_navigation_item">icon for navigation item</string>
+    <string name="deep">DeepLink</string>
 </resources>

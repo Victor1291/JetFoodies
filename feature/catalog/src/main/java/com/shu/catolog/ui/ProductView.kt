@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.shu.catolog.HomeViewModel
@@ -30,6 +32,7 @@ import com.shu.modules.StateScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductView(
+    deepLinkData: String,
     stateScreen: StateScreen,
     viewModel: HomeViewModel,
     onCategoryClick: (Int) -> Unit,
@@ -100,7 +103,8 @@ fun ProductView(
 
                 }
             }
-
+            //String for test deeplink
+            Text(text = "This is Home Screen $deepLinkData",modifier = Modifier.testTag("dashboardDeeplinkArgument"), color = Color.Blue)
             ProductGrid(products = stateScreen.products, onProductClick =  onProductClick)
         }
     }

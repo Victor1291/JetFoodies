@@ -75,6 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     implementation(project(mapOf("path" to ":core:network")))
     implementation(project(mapOf("path" to ":core:models")))
+    implementation("androidx.test.ext:junit-ktx:1.2.1")
 
 
     testImplementation("junit:junit:4.13.2")

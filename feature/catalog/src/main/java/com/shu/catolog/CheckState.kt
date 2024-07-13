@@ -12,6 +12,7 @@ import com.shu.modules.Product
 
 @Composable
 fun CheckState(
+    deepLinkData: String,
     viewModel: HomeViewModel = hiltViewModel(),
     onCategoryClick: (Int) -> Unit,
     onProductClick: (Product) -> Unit
@@ -24,6 +25,7 @@ fun CheckState(
         is UiState.Success -> {
 
             ProductView(
+                deepLinkData = deepLinkData,
                 stateScreen = (viewState as UiState.Success).stateScreen,
                 viewModel = viewModel,
                 onCategoryClick = onCategoryClick,

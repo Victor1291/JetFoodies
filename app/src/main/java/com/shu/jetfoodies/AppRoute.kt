@@ -33,4 +33,9 @@ sealed class AppRoute(val route: String, @StringRes val label: Int, val icon: Im
         icon = Icons.Default.Menu
     )
 
+    data object DeepScreen : AppRoute(
+        route = "deep_screen",
+        label = R.string.deep,
+        icon = Icons.Default.Menu
+    )
 }
