@@ -24,7 +24,7 @@ fun CheckState(
         is UiState.Loading -> LoadingScreen()
         is UiState.Success -> {
 
-            ProductView(
+            HomeScreen(
                 deepLinkData = deepLinkData,
                 stateScreen = (viewState as UiState.Success).stateScreen,
                 viewModel = viewModel,
