@@ -29,7 +29,7 @@ import java.util.Locale
 internal typealias Cent = Int
 
 @Composable
-internal fun priceByQuantityText(
+ fun priceByQuantityText(
     priceInCent: Cent,
     style: TextStyle = MaterialTheme.typography.titleMedium,
 ): AnnotatedString =

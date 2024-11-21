@@ -28,9 +28,9 @@ class MainActivity : ComponentActivity() {
                 )
                 Scaffold(
                     content = { MainNavHost(navController, it, viewModel) },
-                    bottomBar = {
+                  /*  bottomBar = {
                         BottomNav(navController, bottomNavigationItems)
-                    }
+                    }*/
                 )
             }
         }

@@ -22,6 +22,7 @@ import androidx.navigation.navDeepLink
 import com.shu.bascket.BasketScreen
 import com.shu.catolog.CheckState
 import com.shu.detail.DetailScreen
+import com.shu.detail.ProductScreen
 
 private const val argumentKey = "arg"
 
@@ -93,7 +94,7 @@ fun MainNavHost(
             val paramsData = params?.let {
                 ProductParametersType.parseValue(it)
             }
-            DetailScreen(paramsData, navController, onProductClick = { product ->
+            ProductScreen(product =  paramsData ,navHostController =  navController, onProductClick = { product ->
                 //save in Basket
                 viewModel.addProduct(product)
             })

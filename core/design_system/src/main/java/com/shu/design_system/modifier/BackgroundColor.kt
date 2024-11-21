@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 
 @Composable
-internal fun Modifier.overlappedBackgroundColor(isOverlapped: Boolean): Modifier {
-  val backgroundColor by animateColorAsState(
-    label = "background_color",
-    targetValue = if (isOverlapped) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.background,
-  )
-  return drawBehind {
-    drawRect(backgroundColor)
-  }
+fun Modifier.overlappedBackgroundColor(isOverlapped: Boolean): Modifier {
+    val backgroundColor by animateColorAsState(
+        label = "background_color",
+        targetValue = if (isOverlapped) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.background,
+    )
+    return drawBehind {
+        drawRect(backgroundColor)
+    }
 }

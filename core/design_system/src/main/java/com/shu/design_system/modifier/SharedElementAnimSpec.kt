@@ -18,4 +18,4 @@ package com.shu.design_system.modifier
 
 import androidx.compose.animation.core.tween
 
-internal fun <T> sharedElementAnimSpec() = tween<T>(durationMillis = 600)
+ fun <T> sharedElementAnimSpec() = tween<T>(durationMillis = 600)

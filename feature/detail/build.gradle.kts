@@ -44,6 +44,7 @@ android {
 dependencies {
 
     implementation(project(mapOf("path" to ":core:models")))
+    implementation(project(mapOf("path" to ":core:design_system")))
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

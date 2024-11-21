@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import com.shu.design_system.theme.JetFoodiesTheme
 
 @Composable
-internal fun FoodieTopBar(
+fun FoodieTopBar(
     title: @Composable RowScope.() -> Unit,
     action: @Composable RowScope.() -> Unit,
     modifier: Modifier = Modifier,
