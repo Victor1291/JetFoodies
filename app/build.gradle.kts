@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.shu.jetfoodies"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.shu.jetfoodies"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -75,6 +75,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
     implementation(project(mapOf("path" to ":core:network")))
     implementation(project(mapOf("path" to ":core:models")))
+    implementation(project(mapOf("path" to ":core:design_system")))
     implementation("androidx.test.ext:junit-ktx:1.2.1")
 
 

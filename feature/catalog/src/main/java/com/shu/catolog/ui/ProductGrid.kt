@@ -24,6 +24,7 @@ import androidx.compose.material3.CardElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shu.catolog.R
+import com.shu.design_system.component.ProductImage
 import com.shu.modules.Product
 import kotlinx.coroutines.launch
 
@@ -54,7 +56,7 @@ fun ProductGrid(
             gridState.firstVisibleItemIndex == 0 && gridState.firstVisibleItemScrollOffset == 0
         }
     }
-    if (!isAtTop) {
+    LaunchedEffect(key1 = !isAtTop) {
         coroutineScope.launch {
             gridState.animateScrollToItem(0)
         }
@@ -112,17 +114,18 @@ fun DishesCard(
             //    .background(color = Color.White, shape = RectangleShape),
 
         ) {
-            Column(horizontalAlignment = Alignment.Start,
+            Column(
+                horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center
-                ) {
-
-                Image(
+            ) {
+                ProductImage(image = painterResource(id = R.drawable.rectangle))
+                /*Image(
                     modifier = modifier
                         .padding(4.dp)
                         .fillMaxWidth(),
                     painter = painterResource(id = R.drawable.rectangle),
                     contentDescription = "icon for navigation item"
-                )
+                )*/
                 product.name?.let {
                     Text(
                         text = it,

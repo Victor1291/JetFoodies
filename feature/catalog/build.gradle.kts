@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.shu.catolog"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
@@ -58,6 +58,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48.1")
    // implementation(project(mapOf("path" to ":core:network")))
     implementation(project(mapOf("path" to ":core:models")))
+    implementation(project(mapOf("path" to ":core:design_system")))
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
