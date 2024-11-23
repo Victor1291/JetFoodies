@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.shu.modules.BasketEntity
+import com.shu.modules.CartProduct
 import com.shu.modules.Product
 
 @Entity(tableName = "basket")
@@ -32,6 +33,19 @@ fun BasketDbo.fromDb(): BasketEntity {
             image = image,
             priceCurrent = priceCurrent,
             priceOld = priceOld,
+        )
+    }
+}
+
+fun BasketDbo.fromDbToCartProduct(): CartProduct {
+    return with(this) {
+        CartProduct(
+            id = id ?: 1,
+            // backgroundColor = Color.CYAN,
+            imageId = com.shu.modules.R.drawable.pizza,
+            title = name ?: "no name",
+            quantity = 10,
+            price = priceCurrent ?: 100,
         )
     }
 }

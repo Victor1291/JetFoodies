@@ -69,4 +69,11 @@ class HomeViewModel @Inject constructor(
             )
         }
     }
+
+
+    fun addInCart(product: Product) {
+        viewModelScope.launch {
+            repository.addProduct(product)
+        }
+    }
 }

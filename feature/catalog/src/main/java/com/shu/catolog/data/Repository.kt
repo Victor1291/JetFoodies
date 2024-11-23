@@ -16,4 +16,6 @@ interface Repository {
 
     suspend fun getTags(): List<Tag>
 
+    suspend fun addProduct(product: Product)
+
 }

@@ -4,18 +4,25 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import com.shu.design_system.modifier.BarStyle
+import com.shu.design_system.modifier.ProvideSystemBarStyle
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -47,6 +54,18 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+@Immutable
+data class CookieCornerSize(
+    val large: Dp,
+)
+
+private val LocalCookieCornerSize =
+    staticCompositionLocalOf {
+        CookieCornerSize(
+            large = Dp.Unspecified,
+        )
+    }
+
 @Composable
 fun JetFoodiesTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -72,9 +91,21 @@ fun JetFoodiesTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    ProvideSystemBarStyle(BarStyle.Light) {
+        CompositionLocalProvider(
+            LocalCookieCornerSize provides kristinaCookieCornerSize,
+        ) {
+
+            MaterialTheme(
+                colorScheme = colorScheme,
+                typography = Typography,
+                content = content
+            )
+        }
+    }
 }
+
+val MaterialTheme.cornerSize: CookieCornerSize
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalCookieCornerSize.current

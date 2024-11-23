@@ -3,6 +3,7 @@ package com.shu.network
 import com.shu.catolog.data.Repository
 import com.shu.database.FoodieDao
 import com.shu.database.models.ProductDbo
+import com.shu.database.models.toDb
 import com.shu.modules.Category
 import com.shu.modules.Product
 import com.shu.modules.StateScreen
@@ -51,6 +52,10 @@ class RepositoryImpl @Inject constructor(
         return api.getTags().map {
             it.fromApi()
         }
+    }
+
+    override suspend fun addProduct(product: Product) {
+        dao.addBasket(product.toDb())
     }
 
 }

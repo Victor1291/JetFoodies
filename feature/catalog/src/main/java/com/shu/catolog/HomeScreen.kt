@@ -19,6 +19,7 @@
 package com.shu.catolog
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -107,6 +108,7 @@ import com.shu.design_system.component.VerticalHillButton
 import com.shu.design_system.modifier.sharedElementAnimSpec
 import com.shu.design_system.modifier.withSafeNavAnimatedContentScope
 import com.shu.design_system.modifier.withSafeSharedElementAnimationScopes
+import com.shu.design_system.theme.cornerSize
 import com.shu.modules.Product
 import com.shu.modules.StateScreen
 import kotlin.math.sign
@@ -120,7 +122,7 @@ fun HomeScreen(
     stateScreen: StateScreen,
     onCategoryClick: (Int) -> Unit,
     onProductClick: (Product) -> Unit,
-    onNavigateToCart: () -> Unit = {},
+    onNavigateToCart: () -> Unit,
     //onNavigateToProduct: (id: Int) -> Unit,
 ) {
     var shouldApplyFullWidthAnimationToCartButton by rememberSaveable {
@@ -161,6 +163,9 @@ fun HomeScreen(
                 onProductClick(id)
             },
             vitrineItems = stateScreen.products,
+            onAddCart = { product ->
+                viewModel.addInCart(product)
+            }
         )
     }
 }
@@ -354,6 +359,7 @@ private fun HomeTopBar(
 private fun HomeContent(
     vitrineItems: List<Product>,
     onNavigateToProduct: (Product) -> Unit,
+    onAddCart: (Product) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState(pageCount = { vitrineItems.size })
@@ -395,6 +401,9 @@ private fun HomeContent(
                 if (page != pagerState.currentPage) return@dropUnlessResumed
 
                 onNavigateToProduct(vitrineItems[page])
+            },
+            onAddCart = { product ->
+                onAddCart(product)
             },
             modifier =
             Modifier
@@ -497,7 +506,12 @@ private fun HomeNavigationBar() {
                     exit = fadeOut(animationSpec = sharedElementAnimSpec()),
                 )
             }
-            .clip(RoundedCornerShape(topStart = 46.dp, topEnd = 46.dp)),
+            .clip(
+                RoundedCornerShape(
+                    topStart = MaterialTheme.cornerSize.large,
+                    topEnd = MaterialTheme.cornerSize.large
+                )
+            ),
     ) {
         for ((index, icon) in navItemsIcons.withIndex()) {
             NavigationBarItem(

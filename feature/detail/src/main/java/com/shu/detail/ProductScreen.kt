@@ -81,6 +81,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.State
@@ -108,6 +109,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.dropUnlessResumed
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.shu.design_system.component.FoodieFloatingScaffold
 import com.shu.design_system.component.FoodieTopBar
@@ -119,6 +121,7 @@ import com.shu.design_system.modifier.scaleEffectValue
 import com.shu.design_system.modifier.sharedElementAnimSpec
 import com.shu.design_system.modifier.withSafeNavAnimatedContentScope
 import com.shu.design_system.modifier.withSafeSharedElementAnimationScopes
+import com.shu.design_system.theme.cornerSize
 import com.shu.modules.Product
 
 
@@ -129,8 +132,8 @@ fun ProductScreen(
     product: Product?,
     quantity: Int = 10,
     onChangeQuantity: (value: Int) -> Unit = {},
-    onNavigateToCart: () -> Unit = {},
-    onBackClick: () -> Unit = {},
+    onNavigateToCart: () -> Unit ,
+    onBackClick: () -> Unit,
     shouldRunNavAnimations: Boolean = true,
     navHostController: NavHostController,
     viewModel: DetailViewModel = hiltViewModel(),
@@ -257,7 +260,14 @@ fun ProductScreen(
                 },
             ) {
                 ProductBottomBar(
-                    onChangeQuantity = { qty -> onChangeQuantity(qty) },
+                    onChangeQuantity = { qty ->
+                        if (qty == 1) {
+                            if (product != null) {
+                                viewModel.addInCart(product)
+                            }
+                        }
+                        onChangeQuantity(qty)
+                                       },
                     producePriceInCent = product?.priceCurrent ?: 100,
                     orderCount = it,
                     modifier =
@@ -523,13 +533,13 @@ private fun ProductBottomBar(
                             exit = fadeOut(sharedElementAnimSpec()),
                         )
                     }
-                    .clip(RoundedCornerShape(46.dp))
+                    .clip(RoundedCornerShape(MaterialTheme.cornerSize.large))
                     .background(MaterialTheme.colorScheme.secondary)
                     .heightIn(112.dp)
                     .fillMaxWidth()
                     .clickable(
                         interactionSource = interactionSource,
-                        indication = LocalIndication.current
+                        indication = ripple(color = Color.White),
                     ) {
                         onChangeQuantity(1)
                     }
@@ -578,7 +588,7 @@ private fun ProductBottomBar(
                     }
                     .padding(horizontal = 8.dp)
                     .padding(bottom = 8.dp)
-                    .clip(RoundedCornerShape(46.dp))
+                    .clip(RoundedCornerShape(MaterialTheme.cornerSize.large))
                     .background(MaterialTheme.colorScheme.primary)
                     .heightIn(112.dp)
                     .fillMaxWidth(),

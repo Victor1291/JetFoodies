@@ -19,9 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.shu.bascket.BasketScreen
+import com.shu.bascket.new_basket.CartRoute
 import com.shu.catolog.CheckState
-import com.shu.detail.DetailScreen
 import com.shu.detail.ProductScreen
 
 private const val argumentKey = "arg"
@@ -63,7 +62,12 @@ fun MainNavHost(
                     navController.navigate(
                         route = productLink
                     )
-                }, onCategoryClick = {}
+                }, onCategoryClick = {},
+                onNavigateToCart = {
+                    navController.navigate(
+                        route = AppRoute.CartScreen.route
+                    )
+                }
             )
         }
 
@@ -74,9 +78,19 @@ fun MainNavHost(
             }
         }
 
-        composable(AppRoute.PersonScreen.route) {
+        composable(AppRoute.CartScreen.route) {
 
-            BasketScreen()
+            CartRoute(
+                onNavigateToHome = {
+                    navController.navigate(
+                        route = AppRoute.MainScreen.route
+                    )
+                },
+                onNavigateToProduct = { id ->
+//TODO сделать переход по id продукта
+
+                }
+            )
 
             BackHandler {
                 navController.popBackStack()
@@ -94,10 +108,22 @@ fun MainNavHost(
             val paramsData = params?.let {
                 ProductParametersType.parseValue(it)
             }
-            ProductScreen(product =  paramsData ,navHostController =  navController, onProductClick = { product ->
-                //save in Basket
-                viewModel.addProduct(product)
-            })
+            ProductScreen(
+                product = paramsData,
+                navHostController = navController,
+                onProductClick = { product ->
+                    //save in Basket
+                    viewModel.addProduct(product)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onNavigateToCart = {
+                    navController.navigate(
+                        route = AppRoute.CartScreen.route
+                    )
+                }
+            )
 
             BackHandler {
                 navController.popBackStack()

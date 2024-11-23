@@ -21,7 +21,7 @@ sealed class AppRoute(val route: String, @StringRes val label: Int, val icon: Im
         icon = Icons.Default.Search
     )
 
-    data object PersonScreen : AppRoute(
+    data object CartScreen : AppRoute(
         route = "shopping_screen",
         label = R.string.shoppingcart,
         icon = Icons.Default.ShoppingCart

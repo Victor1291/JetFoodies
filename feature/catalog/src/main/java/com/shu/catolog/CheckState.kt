@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.shu.catolog.ui.ProductView
 import com.shu.home.state.ErrorScreen
 import com.shu.home.state.LoadingScreen
 import com.shu.modules.Product
@@ -15,7 +14,8 @@ fun CheckState(
     deepLinkData: String,
     viewModel: HomeViewModel = hiltViewModel(),
     onCategoryClick: (Int) -> Unit,
-    onProductClick: (Product) -> Unit
+    onProductClick: (Product) -> Unit,
+    onNavigateToCart: () -> Unit,
 ) {
     val viewState by viewModel.uiState.collectAsState()
 
@@ -29,7 +29,8 @@ fun CheckState(
                 stateScreen = (viewState as UiState.Success).stateScreen,
                 viewModel = viewModel,
                 onCategoryClick = onCategoryClick,
-                onProductClick = onProductClick
+                onProductClick = onProductClick,
+                onNavigateToCart = onNavigateToCart,
             )
         }
 

@@ -1,12 +1,12 @@
 package com.shu.bascket.data
 
-import com.shu.modules.BasketEntity
+import com.shu.modules.CartProduct
 import kotlinx.coroutines.flow.Flow
 
 
 interface BasketRepository {
 
-    fun getBasket(): Flow<List<BasketEntity>>
+    fun getBasket(): Flow<List<CartProduct>>
 
 // увеличивать счётчик и менять цену
     // уменьшать счётчик до 1

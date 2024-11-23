@@ -21,6 +21,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -56,6 +57,7 @@ import androidx.compose.ui.unit.dp
 import com.shu.design_system.modifier.priceByQuantityText
 import com.shu.design_system.modifier.scaleEffectValue
 import com.shu.design_system.modifier.withSafeSharedElementAnimationScopes
+import com.shu.design_system.theme.cornerSize
 import com.shu.modules.Product
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
@@ -67,13 +69,14 @@ import dev.chrisbanes.haze.hazeChild
 internal fun VitrineItemCard(
     vitrineItem: Product,
     onClick: () -> Unit,
+    onAddCart: (Product) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val scaleEffectValue by interactionSource.scaleEffectValue()
     Card(
         onClick = onClick,
-        shape = RoundedCornerShape(46.dp),
+        shape = RoundedCornerShape(MaterialTheme.cornerSize.large),
         colors =
         CardDefaults.cardColors(
             //containerColor = vitrineItem.backgroundColor,
@@ -111,7 +114,7 @@ internal fun VitrineItemCard(
                     fontWeight = FontWeight.Bold,
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.soup_min),
+                    painter = painterResource(id = R.drawable.soup_max),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     alignment = Alignment.TopCenter,
@@ -131,11 +134,11 @@ internal fun VitrineItemCard(
                     .padding(10.dp)
                     .fillMaxWidth()
                     .height(86.dp)
-                    .clip(RoundedCornerShape(46.dp))
+                    .clip(RoundedCornerShape(MaterialTheme.cornerSize.large))
                     .border(
                         2.dp,
                         color = Color(0xFFE8D0B8),
-                        shape = RoundedCornerShape(46.dp),
+                        shape = RoundedCornerShape(MaterialTheme.cornerSize.large),
                     )
                     .hazeChild(
                         state = hazeState,
@@ -159,7 +162,10 @@ internal fun VitrineItemCard(
                     Modifier
                         .clip(CircleShape)
                         .background(color = MaterialTheme.colorScheme.secondary)
-                        .size(116.dp, 81.dp),
+                        .size(116.dp, 81.dp)
+                        .clickable {
+                            onAddCart(vitrineItem)
+                        }
                 ) {
                     Icon(
                         imageVector = Icons.Default.ShoppingCart,

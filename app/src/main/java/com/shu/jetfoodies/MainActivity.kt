@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import com.shu.design_system.theme.JetFoodiesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,7 +23,7 @@ class MainActivity : ComponentActivity() {
                 val bottomNavigationItems = listOf(
                     AppRoute.MainScreen,
                     AppRoute.SearchScreen,
-                    AppRoute.PersonScreen,
+                    AppRoute.CartScreen,
                 )
                 Scaffold(
                     content = { MainNavHost(navController, it, viewModel) },

@@ -32,7 +32,8 @@ fun BasketScreen(
     ) {
 
         items(basket.size) { num ->
-            ProductCard(basket[num])
+            //TODO
+          //  ProductCard(basket[num])
         }
 
         item {
