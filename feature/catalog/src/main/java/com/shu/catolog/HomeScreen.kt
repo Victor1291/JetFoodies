@@ -109,6 +109,7 @@ import com.shu.design_system.modifier.sharedElementAnimSpec
 import com.shu.design_system.modifier.withSafeNavAnimatedContentScope
 import com.shu.design_system.modifier.withSafeSharedElementAnimationScopes
 import com.shu.design_system.theme.cornerSize
+import com.shu.modules.Category
 import com.shu.modules.Product
 import com.shu.modules.StateScreen
 import kotlin.math.sign
@@ -128,6 +129,10 @@ fun HomeScreen(
     var shouldApplyFullWidthAnimationToCartButton by rememberSaveable {
         mutableStateOf(false)
     }
+
+    var isChangeCategory  by rememberSaveable {
+        mutableStateOf(false)
+    }
     LaunchedEffect(shouldApplyFullWidthAnimationToCartButton) {
         Log.d(
             "HomeScreen",
@@ -145,7 +150,12 @@ fun HomeScreen(
                     shouldApplyFullWidthAnimationToCartButton = true
                     onNavigateToCart()
                 },
+                onCategoryClick = { index ->
+                    viewModel.changeSelect(index)
+                    isChangeCategory = true
+                },
                 shouldApplyOffScreenAnimationToCartButton = shouldApplyFullWidthAnimationToCartButton,
+                category = stateScreen.category
             )
         },
         bottomBar = {
@@ -165,6 +175,10 @@ fun HomeScreen(
             vitrineItems = stateScreen.products,
             onAddCart = { product ->
                 viewModel.addInCart(product)
+            },
+            isChangeCategory = isChangeCategory,
+            changeCategoryState = { //возвращаем стейт обратно, после скрола на первую страницу
+                isChangeCategory = false
             }
         )
     }
@@ -172,7 +186,9 @@ fun HomeScreen(
 
 @Composable
 private fun HomeTopBar(
+    category:  List<Category>,
     onNavigateToCart: () -> Unit,
+    onCategoryClick: (Int) -> Unit,
     shouldApplyOffScreenAnimationToCartButton: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -287,16 +303,17 @@ private fun HomeTopBar(
                 } else {
                     Direction.Left
                 }
-            for ((index, collection) in collections.withIndex()) {
+            for ((index, collection ) in category.withIndex()) {
                 key(index) {
                     CollectionItem(
                         selected = selectedCollectionIndex == index,
                         onClick = {
                             previouslySelectedCollectionIndex = selectedCollectionIndex
                             selectedCollectionIndex = index
+                            onCategoryClick(index)
                         },
-                        name = collection.name,
-                        icon = collection.icon.toPainterOrNull(),
+                        name = collection.name ?: "No Name",
+                       // icon = collection.icon.toPainterOrNull(),
                         animateDirection = animateDirection,
                     )
                 }
@@ -361,8 +378,15 @@ private fun HomeContent(
     onNavigateToProduct: (Product) -> Unit,
     onAddCart: (Product) -> Unit,
     modifier: Modifier = Modifier,
+    isChangeCategory: Boolean = false,
+    changeCategoryState: () -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { vitrineItems.size })
+
+    LaunchedEffect(key1 = isChangeCategory) {
+        pagerState.scrollToPage(0)
+        changeCategoryState()
+    }
 
     val initOffset =
         rememberSaveable(
@@ -379,7 +403,9 @@ private fun HomeContent(
     }
     LaunchedEffect(Unit) {
         initOffset.animateTo(0f, animationSpec = sharedElementAnimSpec())
+
     }
+
 
     HorizontalPager(
         state = pagerState,
