@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,10 +54,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.shu.design_system.modifier.priceByQuantityText
 import com.shu.design_system.modifier.scaleEffectValue
 import com.shu.design_system.modifier.withSafeSharedElementAnimationScopes
+import com.shu.design_system.theme.JetFoodiesTheme
 import com.shu.design_system.theme.cornerSize
 import com.shu.modules.Product
 import dev.chrisbanes.haze.HazeDefaults
@@ -180,7 +183,7 @@ internal fun VitrineItemCard(
 
 private typealias Cent = Int
 
-internal data class VitrineItem(
+data class VitrineItem(
     val id: Int,
     val title: String,
     @DrawableRes val imageId: Int,
@@ -197,7 +200,7 @@ internal fun Product.toVitrineItem() =
         priceInCent = priceCurrent ?: 100,
     )
 
-internal val sampleVitrineItems =
+ val sampleVitrineItems =
     listOf(
         VitrineItem(
             id = 0,
